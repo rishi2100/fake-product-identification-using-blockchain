@@ -9,7 +9,7 @@
 - **npm** 7.5.1
 
 ## 💻 Other Requirements:
-1. Any Chromium-based browser (e.g., Chrome)
+1. Any browser (e.g., Chrome, Firefox, etc)
 2. MetaMask browser extension
 
 ---
