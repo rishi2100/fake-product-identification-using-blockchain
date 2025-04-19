@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Fake Product Identification</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/qr_code_box.css">
+<style>
+.container {
+text-align: right; /* Align content to the right */
+}
+.container h2 {
+text-align: center; /* Changed from left to center */
+}
+.matrix {
+margin-left: auto;
+margin-right: 0;
+text-align: left;
+}
+.qr-code {
+text-align: center; /* Changed from right to center */
+}
+.button-container {
+text-align: center; /* Center the button */
+}
+</style>
+</head>
+<body>
+<section class="ftco-section">
+<div class="container-fluid px-md-5">
+<div class="row justify-content-center">
+<div class="col-md-8 text-center">
+<a class="navbar-brand" href="index.html">Fake Product Identification <span>through Blockchain</span></a>
+<div class="mt-3">
+<button class="btn btn-primary" onclick="connectWallet()">🔗 Connect Wallet</button>
+</div>
+</div>
+</div>
+</div>
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+<div class="container-fluid">
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav">
+<span class="fa fa-bars"></span> Menu
+</button>
+<div class="collapse navbar-collapse" id="ftco-nav">
+<ul class="navbar-nav m-auto">
+<li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+<li class="nav-item"><a href="manufacturer.html" class="nav-link">Manufacturer</a></li>
+<li class="nav-item"><a href="seller.html" class="nav-link">Seller</a></li>
+<li class="nav-item"><a href="consumer.html" class="nav-link">Consumer</a></li>
+</ul>
+</div>
+</div>
+</nav>
+</section>
+<section>
+<div class="container">
+<h2>Add Product</h2>
+<div class="matrix">
+<table width="100%">
+<tr>
+<td width="15%" align="center"><label for="manufacturerID">Manufacturer ID</label></td>
+<td width="30%"><input class="form-control" id="manufacturerID" type="text" /></td>
+<td width="15%" align="center"><label for="productName">Product Name</label></td>
+<td width="30%"><input class="form-control" id="productName" type="text" /></td>
+</tr>
+<tr>
+<td width="15%" align="center"><label for="productSN">Product SN:</label></td>
+<td width="30%"><input class="form-control" id="productSN" type="text" /></td>
+<td width="15%" align="center"><label for="productBrand">Product Brand</label></td>
+<td width="30%"><input class="form-control" id="productBrand" type="text" /></td>
+</tr>
+<tr>
+<td width="15%" align="center"><label for="productPrice">Product Price</label></td>
+<td width="30%"><input class="form-control" id="productPrice" type="text" /></td>
+</tr>
+</table>
+</div>
+<div class="clear">&nbsp;</div>
+<div class="button-container">
+<button type="submit" class="btn btn-warning btn-register" onclick="fetchQR()">Add the Product</button>
+</div>
+</div>
+</section>
+<div class="qr-code">
+<div>
+<img align="center" hidden id="imgQR" src="" alt="qr-code">
+</div>
+<br>
+<div>
+<button hidden type="submit" class="btn btn-warning" id="download" onclick="saveImage()">Download QR Code</button>
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="js/popper.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/web3.min.js"></script>
+<script src="js/truffle-contract.js"></script>
+<script src="js/productApp.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script>
+<script>
+// Connect MetaMask Wallet
+async function connectWallet() {
+if (typeof window.ethereum !== 'undefined') {
+try {
+const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+const account = accounts[0];
+alert('🔗 Connected: ' + account);
+console.log('Connected wallet:', account);
+ } catch (err) {
+console.error('User denied wallet connection:', err);
+ }
+ } else {
+alert("MetaMask is not installed! Please install it from https://metamask.io/");
+ }
+ }
+// QR Code Logic
+let src;
+let qrValue;
+function fetchQR() {
+qrValue = document.getElementById('productSN').value;
+qrImage = document.querySelector(".qr-code");
+qrImageResult = qrImage.querySelector("img");
+src = qrImageResult.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${qrValue}`;
+document.getElementById('imgQR').removeAttribute('hidden');
+document.getElementById('download').removeAttribute('hidden');
+ }
+function saveImage() {
+saveAs(src, qrValue);
+document.getElementById('imgQR').setAttribute('hidden', 'hidden');
+document.getElementById('download').setAttribute('hidden', 'hidden');
+ }
+</script>
+</body>
+</html>
