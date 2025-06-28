@@ -18,7 +18,7 @@
 
 1. **Clone the Project**
    ```bash
-   git clone https://github.com/Sumanth9797/Fake_product_detection_using_blockchain
+   git clone https://github.com/rishi2100/fake-product-identification-using-blockchain.git
    ```
 
 2. **Navigate to Project Directory & Install Dependencies**
